@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% load static %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Kamer Business Center</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="{% static 'shop/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+  <!-- Page level plugin CSS-->
+  <link href="{% static 'shop/vendor/datatables/dataTables.bootstrap4.css' %}" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="{% static 'shop/css/sb-admin.css' %}" rel="stylesheet">
+  <script src="{% static 'shop/vendor/jquery/jquery.min.js' %}"></script>
+
+
+</head>
+
+<body id="page-top">
+    {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ message | safe }}
+        </div>
+    {% endfor %}
+  <nav class="navbar navbar-expand navbar-dark  static-top" style="background-color: #073b86;">
+
+    <a class="navbar-brand mr-1" href="index.html">Kamer Business Center </a>
+
+    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Navbar Search 
+    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="button">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+    --> 
+
+    <!-- Navbar -->
+    <ul class="navbar-nav ml-auto ml-md-auto ">
+      <a href=""><i class="fab fa-whatsapp " aria-hidden="true" style="color: #ffffff;"></i></a>
+      <a href="" class="container"><i class="fab fa-facebook " aria-hidden="true" style="color: #ffffff;"></i></a>
+      <a href=""><i class="fas fa-envelope fa" aria-hidden="true" style="color: #ffffff;"></i></a>
+    </ul>
+
+  </nav>
+
+  <div id="wrapper">
+
+
+    <div id="content-wrapper">
+    {% block content %} {% endblock %}
+     
+
+    </div>
+    <!-- /.content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+   <!-- Sticky Footer -->
+   <footer class="sticky-footer w-100" style="background-color: #073b86; color: #ffffff; bottom:0">
+    
+    <div class="container my-auto ">
+      <div class="copyright text-center my-auto">
+        <span>Copyright © Kamer Business Center 2020</span>
+      </div>
+    </div>
+  </footer>
+ 
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="{% static 'shop/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="{% static 'shop/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+  <!-- Page level plugin JavaScript-->
+  <script src="{% static 'shop/vendor/chart.js/Chart.min.js' %}"></script>
+  <script src="{% static 'shop/vendor/datatables/jquery.dataTables.js' %}"></script>
+  <script src="{% static 'shop/vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="{% static 'shop/js/sb-admin.min.js' %}"></script>
+
+  <!-- Demo scripts for this page-->
+  <script src="{% static 'shop/js/demo/datatables-demo.js' %}"></script>
+  <script src="{% static 'shop/js/demo/chart-area-demo.js' %}"></script>
+
+</body>
+
+</html>

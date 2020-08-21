@@ -1,0 +1,105 @@
+{% extends "base_generic.html" %}
+{% block content %}
+      <div class="container-fluid">
+        <!-- DataTables Example -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            All Orders</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                   
+                    <th>Created At</th>
+                    <th>Customer</th>
+                    <th>Phone</th>
+                    <th>Product</th>
+                    <th>Total (CFA)</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    
+                    <th>Cerated At</th>
+                    <th>Customer</th>
+                    <th>Phone</th>
+                    <th>Product</th>
+                    <th>Total (CFA)</th>
+                    <th>Action</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                {% for order in orders %}
+                  <tr>
+                    <td>{{order.created_at}}</td>
+                    <td>{{order.customer_firstName}} {{order.customer_lastName}}</td>
+                    <td>{{order.customer_phone}}</td>
+                    <td>{{order.products.first.name}}</td>
+                    <td>{{order.total_price}}</td>
+                    
+                    <td class="">
+                        <div class="row">
+                          <a href="#" data-toggle="modal" class="open-modal col-md-4"  data-url="{% url 'sellerCenter:order.details' order.order_number %}">
+                            <span class="fas fa-eye mx-auto text-primary" aria-hidden="true"></span>
+                          </a>
+                          <a href="#" data-toggle="modal" id="aprove-order" class="col-md-4"  data-url="">
+                              <span class="fas fa-thumbs-up mx-auto text-success" aria-hidden="true"></span>
+                          </a>
+                          <a href="#" data-toggle="modal" id="reject-order" class="col-md-4"  data-url="">
+                              <span class="fas fa-thumbs-down mx-auto text-danger" aria-hidden="true"></span>
+                          </a>
+                            
+                        </div>
+                        
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        </div>
+        <!-- Start Modal  -->
+            <div class="modal fade bg-dark" id="modal-div" tabindex="-1" role="dialog" aria-labelledby="create-user" aria-hidden="true">
+                
+            </div>
+        <!-- End Modal  -->
+
+      </div>
+      <!-- /.container-fluid -->
+      <script type="text/javascript">
+            var modalDiv = $("#modal-div");
+           
+            $(".open-modal").on("click", function(){
+                $.ajax({
+                    url: $(this).attr("data-url"),
+                    success: function(data){
+                        modalDiv.html(data);
+                        $("#modal-div").modal();
+                  }
+                });     
+            });
+            $("#aprove-order").on("click", function(){
+                $.ajax({
+                    url: $(this).attr("data-url"),
+                    success: function(data){
+                        modalDiv.html(data);
+                        $("#modal-div").modal();
+                  }
+                });     
+            });
+            $("#reject-order").on("click", function(){
+                $.ajax({
+                    url: $(this).attr("data-url"),
+                    success: function(data){
+                        modalDiv.html(data);
+                        $("#modal-div").modal();
+                  }
+                });     
+            });
+      </script>
+{% endblock %} 

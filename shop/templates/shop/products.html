@@ -1,0 +1,115 @@
+{% extends "base_generic.html" %}
+{% load social_share %}
+{% block content %}
+      <div class="container-fluid">
+
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <a class="btn btn-primary open-modal" href="#" data-toggle="modal" data-url="{% url 'sellerCenter:create-product' %}">New Product</a>
+        </ol>
+
+        <!-- DataTables Example -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            All Products</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Sku</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Discount</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Sku</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Discount</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                {% for product in products %}
+                  <tr>
+                    <td>{{product.sku}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.price}}</td>
+                    <td>{{product.discount}}</td>
+                    <td>{{product.description}}</td>
+                    <td> <img src = {{product.image.url}}></td>
+                    <td class="">
+                        <div class="row">
+                            <a href="#" data-toggle="modal" class="shop-link-modal col-md-4" data-id="{{product.get_absolute_url}}" >
+                                <span class="fas fa-link mx-auto text-primary" aria-hidden="true"></span>
+                            </a>
+                            <a href="#" data-toggle="modal" class="open-modal col-md-4"  data-url="{% url 'sellerCenter:form_updateProduct' product.sku %}">
+                                <span class="fas fa-edit mx-auto text-secondary" aria-hidden="true"></span>
+                            </a>
+                            <a href="#" data-toggle="modal" class="open-modal col-md-4"  data-url="{% url 'sellerCenter:form_deleteProduct' product.sku %}">
+                                <span class="fas fa-trash-alt mx-auto text-danger" aria-hidden="true"></span>
+                            </a>
+                            
+                        </div>
+                        
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        </div>
+        <!-- Start Modal  -->
+            <div class="modal fade bg-dark" id="modal-div" tabindex="-1" role="dialog" aria-labelledby="create-user" aria-hidden="true">
+                
+            </div>
+            <div class="modal bg-dark fade" id="shop-link" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <input class="form-control mx-2 float-left" type="text" name="link" value="" id="link"> 
+                                <i id="copy" class="fa fa-clipboard btn btn-primary" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                  </div>
+            </div>
+        <!-- End Modal  -->
+
+      </div>
+      <!-- /.container-fluid -->
+      <script type="text/javascript">
+            var modalDiv = $("#modal-div");
+           
+            $(".open-modal").on("click", function(){
+                $.ajax({
+                    url: $(this).attr("data-url"),
+                    success: function(data){
+                        modalDiv.html(data);
+                        $("#modal-div").modal();
+					}
+				});     
+			});
+            $(".shop-link-modal").on("click", function(){
+                
+                $('input[name = link]').val($(this).data('id'));
+                $("#shop-link").modal();
+			}); 
+
+            $("#copy").on("click", function(){
+                var copyText = $('input[name = link]');
+                copyText.select();
+                document.execCommand("copy");
+			}); 
+      </script>
+{% endblock %} 

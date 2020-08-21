@@ -1,0 +1,21 @@
+<div class="modal-dialog" role="document" id="myModal">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="delete-product">Delete</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">x</span>
+        </button>
+    </div>
+    <form method="post" action="{% url 'sellerCenter:delete-product' sku %}">
+        {% csrf_token %}
+                    
+        <div class="card-body">
+            <span class="text-danger"> Do you really want to delete this product ? </span>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <input type="submit" value = "Delete"  class="btn btn-danger">
+        </div>
+    </form>
+    </div>
+</div>

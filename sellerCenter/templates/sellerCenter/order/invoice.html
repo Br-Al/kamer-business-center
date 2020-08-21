@@ -1,0 +1,94 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+   
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body{
+            background: url(/static/sellerCenter/img/logo.png); 
+            background-size:100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.9;
+        }
+    </style>
+  </head>
+  <body >
+    <div class="container">
+        <strong class="float-right my-auto">{{order.updated_at}}</strong>
+         
+        <div class="row container my-auto">
+            <div class="col-md-4">
+                <h4>Kamer Business Center</h4>
+                <h6>+237675648360</h6>
+                <h6>contact@kamerbusinesscenter.cm</h6>
+                <h6>Your Address</h6>
+            </div>
+            <div class="col-md-4">
+                <img src="" alt="">
+                <h6 class="text-center">{{order.order_number}}</h6>
+            </div>
+            <div class="col-md-4">
+                <h5 class="float-right">{{order.customer_firstName}} {{order.customer_lastName}}</h5>
+                <h5 class="float-right">{{order.customer_phone}}</h5>
+                <h5 class="float-right">{{order.customer_email}}</h5>
+                <h5 class="float-right">{{order.delivery_address}}</h5>
+            </div>
+        </div>
+        
+    </div>
+    <div class="container w-100">
+        <table class="table table-striped table-inverse">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>Product</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Discount</th>
+                    <th>Delivery fee</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in order.products.all %}
+                <tr>
+                    <td>{{product.name}}</td>
+                    <td>{{product.price}}</td>
+                    <td>{{order.orderproduct_set.first.quantity}}</td>
+                    <td>{{product.discount}}</td>
+                    <td>{{order.delivery_fee}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h5 class="float-right text-primary">Total : {{order.total_price}} CFA</h5>
+    </div>
+    <div class="container w-100">
+        <div class="row container">
+            <div class="col-md-6">
+                <h6>Kamer Business Center</h6>
+            </div>
+            <div class="col-md-6">
+                <h6 class="float-right">Customer</h6>
+            </div>
+        </div>
+    </div>
+    
+    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script>
+        window.print()
+    </script>
+  </body>
+</html>

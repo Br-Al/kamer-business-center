@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% block content %}
+<form action="{% url 'shop:make.order' product.sku %}" method="POST" class=" container"  style="color: #ff9d01;">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-6" style="background-color: #ff9d01;color: #ffffff;">
+                <div class="">
+                    <h3 class=" text-center mx-auto w-auto">{{product.name}}  -{{product.discount}}%</h3> 
+                </div>
+                <div class="form-group"> 
+                    <input type="hidden" name="discount" id="discount" value="{{product.discount}}">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                <input type="number" id="price" class="form-control" value="{{product.price}}" readonly>
+                                <label for="price">Unit Price (CFA)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                <input type="number" name="quantity" id="quantity" class="form-control" value="1" min="1" required="required">
+                                <label for="lastName">Quantity</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label-group">
+                        <textarea  class="form-control"  readonly>{{product.description}}</textarea>
+                    </div> 
+                </div>
+                <div class="form-group">
+                    <div class="form-label-group container">
+                        <img class="img img-fluid rounded img-responsive" src="{{ product.image.url}} " alt="{{product.name}}">
+                    </div> 
+                </div>
+        </div>
+
+        <div class="col-md-6" style="">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <input type="text" id="firstName" name="customer_firstName" class="form-control" placeholder="First Name" required="required">
+                            <label for="firstName">First Name</label>
+                        </div> 
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <input type="text" id="lastName" name="customer_lastName" class="form-control" placeholder="Last Name" required="required">
+                            <label for="lastName">Last Name</label>
+                        </div>  
+                    </div>
+                    
+                </div>
+                
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <input type="text" id="phone" name="customer_phone" class="form-control" placeholder="ex: +237 652534661" required="required">
+                            <label for="phone">Phone Number</label>
+                        </div> 
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-label-group">
+                            <input type="email" name="customer_email" id="email" class="form-control" placeholder="Email" required="required">
+                            <label for="email">Email</label>
+                        </div>  
+                    </div>
+                    
+                </div>
+                
+            </div>
+            <div class="form-group">
+                <h5>Do you want to be delivered?</h5>
+                <input type="radio" name="isDeliveryFee" id="yes"> <strong>Yes</strong>
+                <input type="radio" name="isDeliveryFee" id="no"> <strong>No</strong>
+            </div>
+            <div id="delivery-block" style="display: none;">
+                <div class="form-group" >
+                    <label for="address">Address</label>
+                    <select name="city" id="city" class="form-control">
+                        <option value="douala" selected>Douala</option>
+                        <option value="yaounde">Yaounde</option>
+                    </select>
+                </div>
+                <div class="form-label-group">
+                    
+                    <input type="text" id="address" name="delivery_address" class="form-control" placeholder="Delivery Address">
+                    <label for="address">Delivery Address</label>
+                    <span><i>Delivery Fee: 1000 CAF-Douala; 15000 CFA-Yaoundé</i></span>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="form-group w-100 " id="total-price">
+                    <h3  class="float-right"></h3>
+                </div>
+            </div>
+            
+            <div class="row ">
+                <div class="form-group w-100">
+                    <input type="submit" value = "Buy"  class="btn btn-primary float-right">
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+    
+</form>
+<script type="text/javascript">
+    totalPrice();
+    
+    function totalPrice() {
+        total = ($('#price').val()- $('#price').val()* $('#discount').val()/100) * $('#quantity').val();
+        if ($('#yes').is(':checked')) {
+            if ($('#city').val()=="douala") {
+                total +=1000; 
+            } else {
+                total += 1500;
+            }
+        }
+        $('#total-price h3').html("Total: "+ total +"  CFA");
+    }
+
+    
+    $("input:radio").change(function () {
+        totalPrice();
+        if ($('#yes').is(':checked')) {
+            $('#delivery-block').css('display','block');
+        } else {
+            $('#delivery-block').css('display', 'none');
+        }
+        
+    })
+    $("#quantity").change(function(){
+        totalPrice();
+    })
+    $("#city").change(function(){
+        totalPrice();
+    })
+</script>
+{% endblock %} 
