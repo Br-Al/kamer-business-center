@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'kamerbusinesscenter.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
+"""
 if 'RDS_HOSTNAME' in os.environ:
     DATABASES = {
         'default': {
@@ -111,7 +111,7 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-"""
+
 
 
 # Password validation
