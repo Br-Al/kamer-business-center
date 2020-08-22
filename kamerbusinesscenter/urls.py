@@ -19,9 +19,9 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.views.generic import RedirectView
 urlpatterns = [
-    path('sellerCenter/',include('sellerCenter.urls')),
+    path('sellercenter/',include('sellercenter.urls')),
     path('shop/',include('shop.urls', namespace = 'shop')),
     path('admin/',admin.site.urls  ),
-    path('',RedirectView.as_view(url='sellerCenter/' )),
+    path('',RedirectView.as_view(url='sellercenter/' )),
     
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

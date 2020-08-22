@@ -20,31 +20,31 @@ def index(request):
 	products = Product.objects.all()
 	users = User.objects.all()
 	
-	return render(request, 'sellerCenter/index.html',{'users': users, 'products':products, 'orders': orders})
+	return render(request, 'sellercenter/index.html',{'users': users, 'products':products, 'orders': orders})
 
 @login_required()
 def users(request):
 	registration_form = RegistrationForm()
 	users = User.objects.all()
-	return render(request, 'sellerCenter/users.html', {'users': users})
+	return render(request, 'sellercenter/users.html', {'users': users})
 
 @login_required()
 def products(request):
 	
 	products = Product.objects.all()
-	return render(request, 'sellerCenter/products.html', {'products':products})
+	return render(request, 'sellercenter/products.html', {'products':products})
 
 @login_required()
 def orders(request):
 	orders = Order.objects.all()
-	return render(request, 'sellerCenter/orders.html', {'orders': orders})
+	return render(request, 'sellercenter/orders.html', {'orders': orders})
 
 """ 
 	Create, Update and delete User
 """
 @login_required()
 def createUser(request):
-	reverse('sellerCenter:user.create')
+	reverse('sellercenter:user.create')
 	if request.method == 'POST':
 	
 		registration_form = RegistrationForm(request.POST)
@@ -57,17 +57,17 @@ def createUser(request):
 			messages.success(request, 'User successful created !')
 		else:
 			messages.error(request, 'Invalid information, please check your form and correct some fields.')
-		return render(request, 'sellerCenter/users.html', {'registration_form': registration_form,'users': users})
+		return render(request, 'sellercenter/users.html', {'registration_form': registration_form,'users': users})
 	
 	else:
 		registration_form = RegistrationForm()
-		return render(request, 'sellerCenter/forms/user/register.html', {'registration_form': registration_form})
-	#return render(request, 'sellerCenter/users.html')
+		return render(request, 'sellercenter/forms/user/register.html', {'registration_form': registration_form})
+	#return render(request, 'sellercenter/users.html')
 	
 
 @login_required()
 def updateUser(request, user_id):
-	reverse('sellerCenter:user.update', args=[user_id])
+	reverse('sellercenter:user.update', args=[user_id])
 	form = updateUserForm()
 	if user_id != None:
 		user = get_object_or_404(User, pk=user_id)
@@ -79,36 +79,36 @@ def updateUser(request, user_id):
 		else:
 			messages.error(request, 'Invalid information, please check your form and correct some fields.')
 	
-	return redirect('sellerCenter:users')
+	return redirect('sellercenter:users')
 
 @login_required()
 def deleteUser(request, user_id):
-	reverse('sellerCenter:user.delete', args=[user_id])
+	reverse('sellercenter:user.delete', args=[user_id])
 	if user_id != None:
 		user = get_object_or_404(User, pk=user_id)
 		user.delete()
 		messages.success(request, 'User successful deleted !')
-	return redirect('sellerCenter:users')
+	return redirect('sellercenter:users')
 
 @login_required()
 def form_updateUser(request, user_id):
-	reverse('sellerCenter:user.form.update', args = [user_id])
+	reverse('sellercenter:user.form.update', args = [user_id])
 	user = get_object_or_404(User, pk=user_id)
 	form = updateUserForm(instance = user)
-	return render(request, 'sellerCenter/forms/user/update.html', {'form': form, 'user_id':user.id})
+	return render(request, 'sellercenter/forms/user/update.html', {'form': form, 'user_id':user.id})
 
 
 @login_required()
 def form_createUser(request, user_id):
-	reverse('sellerCenter:user.form.create')
+	reverse('sellercenter:user.form.create')
 	registration_form = RegistrationForm()
-	return render(request, 'sellerCenter/forms/user/register.html', {'registration_form': registration_form})
+	return render(request, 'sellercenter/forms/user/register.html', {'registration_form': registration_form})
 
 @login_required()
 def form_deleteUser(request, user_id):
-	reverse('sellerCenter:user.form.delete', args = [user_id])
+	reverse('sellercenter:user.form.delete', args = [user_id])
 	print(user_id)
-	return render(request, 'sellerCenter/forms/user/delete.html', {'user_id': user_id})
+	return render(request, 'sellercenter/forms/user/delete.html', {'user_id': user_id})
 
 
 """ 
@@ -125,58 +125,58 @@ def createProduct(request, user_id=None):
 			product = form.save()
 			ProductManagement.objects.create(user = request.user, product = product, action = "create")
 			messages.success(request, 'Product Saved :!')
-		return redirect('sellerCenter:products')
+		return redirect('sellercenter:products')
 	else:
 		form = createProductForm()
-		return render(request, 'sellerCenter/forms/product/create.html', {'form': form})
+		return render(request, 'sellercenter/forms/product/create.html', {'form': form})
 
 @login_required()
 def updateProduct(request, sku):
-	reverse('sellerCenter:product.update', args=[sku])
+	reverse('sellercenter:product.update', args=[sku])
 	product = get_object_or_404(Product, pk=sku)
 	form = updateProductForm(request.POST, request.FILES, instance = product)
 	if form.is_valid():
 		product = form.save()
 		ProductManagement.objects.create(user = request.user, product = product, action = "update")
 		messages.success(request, 'Product updated !')
-	return redirect('sellerCenter:products')
+	return redirect('sellercenter:products')
 
 @login_required()
 def deleteProduct(request, sku):
-	reverse('sellerCenter:product.delete', args=[sku])
+	reverse('sellercenter:product.delete', args=[sku])
 	product = get_object_or_404(Product, pk = sku)
 	product.delete()
 	#ProductManagement.objects.create(user = request.user, product = product, action = "delete")
 	messages.success(request, 'Product deleted !')
-	return redirect('sellerCenter:products')
+	return redirect('sellercenter:products')
 
 @login_required()
 def form_updateProduct(request, sku):
-	reverse('sellerCenter:product.form.update', args = [sku])
+	reverse('sellercenter:product.form.update', args = [sku])
 	product = get_object_or_404(Product, pk=sku)
 	form = updateProductForm(instance = product)
-	return render(request, 'sellerCenter/forms/product/update.html', {'form': form, 'product':product})
+	return render(request, 'sellercenter/forms/product/update.html', {'form': form, 'product':product})
 
 
 @login_required()
 def form_createProduct(request, user_id):
-	reverse('sellerCenter:product.form.create')
+	reverse('sellercenter:product.form.create')
 	registration_form = RegistrationForm()
-	return render(request, 'sellerCenter/forms/product/create.html', {'registration_form': registration_form})
+	return render(request, 'sellercenter/forms/product/create.html', {'registration_form': registration_form})
 
 @login_required()
 def form_deleteProduct(request, sku):
-	reverse('sellerCenter:product.form.delete', args = [sku])
-	return render(request, 'sellerCenter/forms/product/delete.html', {'sku': sku})
+	reverse('sellercenter:product.form.delete', args = [sku])
+	return render(request, 'sellercenter/forms/product/delete.html', {'sku': sku})
 
 @login_required()
 def detailsOrder(request, id):
-	reverse('sellerCenter:order.details', args = [id])
+	reverse('sellercenter:order.details', args = [id])
 	order = get_object_or_404(Order, pk = id)
-	return render(request, 'sellerCenter/order/details.html', {'order': order })
+	return render(request, 'sellercenter/order/details.html', {'order': order })
 
 @login_required()
 def generateInvoice(request, id):
-	reverse('sellerCenter:order.invoice', args = [id])
+	reverse('sellercenter:order.invoice', args = [id])
 	order = get_object_or_404(Order, pk = id)
-	return render(request, 'sellerCenter/order/invoice.html', {'order': order})
+	return render(request, 'sellercenter/order/invoice.html', {'order': order})

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from sellerCenter.models import Product, Order, OrderProduct
-from sellerCenter.sku_generator import generate_order_number
+from sellercenter.models import Product, Order, OrderProduct
+from sellercenter.sku_generator import generate_order_number
 from django.contrib import messages
 from django.urls import reverse
 # Create your views here.

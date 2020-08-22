@@ -6,7 +6,7 @@
         <span aria-hidden="true">x</span>
         </button>
     </div>
-    <form method="POST" action="{% url 'sellerCenter:update-product' sku %}" enctype="multipart/form-data">
+    <form method="POST" action="{% url 'sellercenter:update-product' sku %}" enctype="multipart/form-data">
         {% csrf_token %}  
         <input type="hidden" name="next" value="{{ request.path }}">
         <div class="card-body">

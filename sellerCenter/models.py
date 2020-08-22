@@ -10,7 +10,7 @@ class Product(models.Model):
     description = models.TextField(null = True)
     discount = models.PositiveIntegerField(default = 0)
     price = models.PositiveIntegerField()
-    image = models.ImageField(upload_to = 'sellerCenter/product_image/%y/%m/%d')
+    image = models.ImageField(upload_to = 'sellercenter/product_image/%y/%m/%d')
     sku = models.CharField(max_length=200, primary_key=True)
     action = models.ManyToManyField(
         User,
