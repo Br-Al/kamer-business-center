@@ -6,7 +6,7 @@
         <span aria-hidden="true">x</span>
         </button>
     </div>
-    <form method="post" action="{% url 'sellercenter:product.delete' sku %}">
+    <form method="post" action="{% url 'sellerCenter:product.delete' sku %}">
         {% csrf_token %}
                     
         <div class="card-body">

@@ -5,7 +5,7 @@
 
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
-          <a class="btn btn-primary open-modal" href="#" data-toggle="modal" data-url="{% url 'sellercenter:product.create' %}">New Product</a>
+          <a class="btn btn-primary open-modal" href="#" data-toggle="modal" data-url="{% url 'sellerCenter:product.create' %}">New Product</a>
         </ol>
 
         <!-- DataTables Example -->
@@ -52,11 +52,11 @@
                             <a href="#" data-toggle="modal" class="shop-link-modal col-md-6" data-id="{{product.get_absolute_url}}" >
                                 <span class="fas fa-link mx-auto text-primary" aria-hidden="true"></span>
                             </a>
-                            <a href="#" data-toggle="modal" class="open-modal col-md-6"  data-url="{% url 'sellercenter:product.form.update' product.sku %}">
+                            <a href="#" data-toggle="modal" class="open-modal col-md-6"  data-url="{% url 'sellerCenter:product.form.update' product.sku %}">
                                 <span class="fas fa-edit mx-auto text-secondary" aria-hidden="true"></span>
                             </a>
                             <!--
-                            <a href="#" data-toggle="modal" class="open-modal col-md-4"  data-url="{% url 'sellercenter:product.form.delete' product.sku %}">
+                            <a href="#" data-toggle="modal" class="open-modal col-md-4"  data-url="{% url 'sellerCenter:product.form.delete' product.sku %}">
                                 <span class="fas fa-trash-alt mx-auto text-danger" aria-hidden="true"></span>
                             </a>
                             -->

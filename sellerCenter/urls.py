@@ -4,7 +4,7 @@ from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
 from .forms import RegistrationForm
 
-app_name = 'sellercenter'
+app_name = 'sellerCenter'
 
 urlpatterns = [
    # path('', RedirectView.as_view(url='dashboard')),

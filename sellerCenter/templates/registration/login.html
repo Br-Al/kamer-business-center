@@ -15,7 +15,7 @@
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
   <!-- Custom styles for this template-->
-  <link href="{% static 'sellercenter/css/sb-admin.css' %}" rel="stylesheet">
+  <link href="{% static 'sellerCenter/css/sb-admin.css' %}" rel="stylesheet">
 
 </head>
 
@@ -28,7 +28,7 @@
         <div class="float-right">Kamer Business Center</div>
       </div>
       <div class="card-body">
-        <form method = "Post" action ="{% url 'sellercenter:login' %}" >
+        <form method = "Post" action ="{% url 'sellerCenter:login' %}" >
          {% csrf_token %}
           <div class="form-group">
             <div class="form-label-group">

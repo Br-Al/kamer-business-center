@@ -6,7 +6,7 @@
         <span aria-hidden="true">x</span>
         </button>
     </div>
-    <form method="POST" action="{% url 'sellercenter:user.create' %}">
+    <form method="POST" action="{% url 'sellerCenter:user.create' %}">
         {% csrf_token %}
         {{registration_form.id}}   
         <input type="hidden" name="next" value="{{ request.path }}">

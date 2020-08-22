@@ -135,9 +135,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
 
-LOGIN_REDIRECT_URL = '/sellercenter/dashboard'
+LOGIN_REDIRECT_URL = '/sellerCenter/dashboard'
 
-LOGIN_URL = '/sellercenter/login'
+LOGIN_URL = '/sellerCenter/login'
 
 # For Flash Message
 try:
