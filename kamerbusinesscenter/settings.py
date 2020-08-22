@@ -94,7 +94,7 @@ else:
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'sellerCenter_db',
             'USER': 'admin',
-            'PASSWORD': 'Cameroon@70821',
+            'PASSWORD': 'Cameroon',
             'HOST': 'localhost',
             'PORT': '3306'
 
