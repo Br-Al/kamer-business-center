@@ -154,7 +154,7 @@ FILE_UPLOAD_DIRECTORY_PERMISSIONS = 777
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = 'static'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
