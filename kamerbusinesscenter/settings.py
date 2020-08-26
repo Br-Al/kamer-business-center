@@ -26,7 +26,9 @@ SECRET_KEY = 'pjg)*z6s#x48il3%74u!#$q9r-8%x9ag!*a#(4f3h3i^c%-=d1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["django-app.eba-vw53akhg.us-west-2.elasticbeanstalk.com",
+    "kamerbusinesscenter.com",
+]
 
 
 # Application definition
@@ -75,7 +77,7 @@ WSGI_APPLICATION = 'kamerbusinesscenter.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-"""
+
 if 'RDS_HOSTNAME' in os.environ:
     DATABASES = {
         'default': {
@@ -87,30 +89,19 @@ if 'RDS_HOSTNAME' in os.environ:
             'PORT': os.environ['RDS_PORT'],
         }
     }
+
 else:
-    
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'sellerCenter_db',
+            'NAME': 'kbc_db',
             'USER': 'admin',
             'PASSWORD': 'Cameroon@70821',
             'HOST': 'localhost',
-            'PORT': '3306'
-
+            'PORT': '3306',
         }
     }
-"""
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sellercenterdb',
-        'USER': 'admin',
-        'PASSWORD': 'Cameroon',
-        'HOST': 'kamerbusinesscenter.cj1toricgtlm.us-west-2.rds.amazonaws.com',
-        'PORT': '3306',
-    }
-}
+
 
 
 
