@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = ["django-app.eba-vw53akhg.us-west-2.elasticbeanstalk.com",
     "kamerbusinesscenter.com",
     "172.31.36.237",
-    'localhost',
+#   'localhost',
 ]
 
 
