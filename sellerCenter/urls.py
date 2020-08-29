@@ -20,7 +20,7 @@ urlpatterns = [
     path('user/form-update/<int:user_id>', views.form_updateUser, name = "user.form.update"),
     path('user/delete/<int:user_id>', views.deleteUser, name = "user.delete"),
     path('user/form-delete/<int:user_id>', views.form_deleteUser, name = "user.form.delete"),
-
+    path('user/root/create', views.createsuperuser, name = "user.create.root"),
     path('product', views.createProduct, name = "product.create"),
     path('product/<str:sku>', views.createProduct, name = "product.view.shop"),
     path('product/update/<str:sku>', views.updateProduct, name = "product.update"),

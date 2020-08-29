@@ -42,6 +42,16 @@ def orders(request):
 """ 
 	Create, Update and delete User
 """
+
+# Create a super user if not exist
+
+def createsuperuser(request):
+	reverse('sellerCenter:user.create.root')
+	users = User.objects.all()
+	if len(users) == 0:
+		user = User.objects.create_superuser('admin', 'admin@kamerbusinesscenter.com', 'pass')
+	return redirect('sellerCenter:dashboard')
+
 @login_required()
 def createUser(request):
 	reverse('sellerCenter:user.create')
