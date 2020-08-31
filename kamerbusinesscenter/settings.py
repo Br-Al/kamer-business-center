@@ -143,7 +143,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-FILE_UPLOAD_DIRECTORY_PERMISSIONS = 777
+FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o777
+FILE_UPLOAD_PERMISSIONS = 0o644
 
 STATIC_URL = '/static/'
 
