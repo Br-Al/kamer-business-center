@@ -157,7 +157,12 @@ MEDIA_URL = '/media/'
 LOGIN_REDIRECT_URL = '/sellerCenter/dashboard'
 
 LOGIN_URL = '/sellerCenter/login'
+# Files upload
 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID = 'AKIAJBPMY3KUFGVFQ6VQ'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'kamerbusinesscenter'
 # For Flash Message
 try:
     from django.contrib.messages import constants as messages
