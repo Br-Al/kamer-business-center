@@ -21,7 +21,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     def get_absolute_url(self):
-        return 'https://kamerbusinesscenter.com'+ reverse('shop:product.view.shop', args = [self.sku])
+        return 'http://kamerbusinesscenter.com'+ reverse('shop:product.view.shop', args = [self.sku])
         
 class Order(models.Model):
     customer_firstName = models.CharField(max_length=200)
