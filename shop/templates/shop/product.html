@@ -13,13 +13,13 @@
                         <div class="col-md-6 form-group">
                             <div class="form-label-group">
                                 <input type="number" id="price" class="form-control" value="{{product.price}}" readonly>
-                                <label for="price">Unit Price (CFA)</label>
+                                <label for="price">{{_("Prix Unitaire (CFA)")}}</label>
                             </div>
                         </div>
                         <div class="col-md-6 form-group">
                             <div class="form-label-group">
                                 <input type="number" name="quantity" id="quantity" class="form-control" value="1" min="1" required="required">
-                                <label for="lastName">Quantity</label>
+                                <label for="lastName">{{_("Quantité")}}</label>
                             </div>
                         </div>
                     </div>
@@ -41,14 +41,14 @@
                 <div class="form-row">
                     <div class="col-md-6 form-group">
                         <div class="form-label-group">
-                            <input type="text" id="firstName" name="customer_firstName" class="form-control" placeholder="First Name" required="required">
-                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="customer_firstName" class="form-control" placeholder="{{_("Prénom(s)")}}" required="required">
+                            <label for="firstName">{{_("Prénom(s)")}}</label>
                         </div> 
                     </div>
                     <div class="col-md-6 form-group">
                         <div class="form-label-group">
-                            <input type="text" id="lastName" name="customer_lastName" class="form-control" placeholder="Last Name" required="required">
-                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="customer_lastName" class="form-control" placeholder="{{_("Nom(s)")}}" required="required">
+                            <label for="lastName">{{_("Nom(s)")}}</label>
                         </div>  
                     </div>
                     
@@ -60,13 +60,13 @@
                     <div class="col-md-6 form-group">
                         <div class="form-label-group">
                             <input type="text" id="phone" name="customer_phone" class="form-control" placeholder="ex: +237 652534661" required="required">
-                            <label for="phone">Phone Number</label>
+                            <label for="phone">{{_("Tel")}}</label>
                         </div> 
                     </div>
                     <div class="col-md-6 form-group">
                         <div class="form-label-group">
-                            <input type="email" name="customer_email" id="email" class="form-control" placeholder="Email" required="required">
-                            <label for="email">Email</label>
+                            <input type="email" name="customer_email" id="email" class="form-control" placeholder="{{_("Email")}}" required="required">
+                            <label for="email">{{_("Email")}}</label>
                         </div>  
                     </div>
                     
@@ -74,23 +74,24 @@
                 
             </div>
             <div class="form-group">
-                <h5>Do you want to be delivered?</h5>
-                <input type="radio" name="isDeliveryFee" id="yes"> <strong>Yes</strong>
-                <input type="radio" name="isDeliveryFee" id="no"> <strong>No</strong>
+                <h5>{{_("Souhaitez vous être livré ?")}}</h5>
+                <input type="radio" name="isDeliveryFee" id="yes"> <strong>{{_("Oui")}}</strong>
+                <input type="radio" name="isDeliveryFee" id="no"> <strong>{{_("Non")}}</strong>
             </div>
             <div id="delivery-block" style="display: none;">
                 <div class="form-group" >
-                    <label for="address">Address</label>
+                    <label for="address">{{_("Adresse")}}</label>
                     <select name="city" id="city" class="form-control">
-                        <option value="douala" selected>Douala</option>
-                        <option value="yaounde">Yaounde</option>
+                        <option value="0" selected>{{_("Choisissez une Ville")}}</option>
+                        <option value="douala">{{_("Douala")}}</option>
+                        <option value="yaounde">{{_("Yaounde")}}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     
-                    <input type="text" id="address" name="delivery_address" class="form-control" placeholder="Delivery Address">
-                    <label for="address">Delivery Address</label>
-                    <span><i>Delivery Fee: 1000 CAF-Douala; 15000 CFA-Yaoundé</i></span>
+                    <input type="text" id="address" name="delivery_address" class="form-control" placeholder="{{_("Adresse de livraison")}}" value = "">
+                    
+                    <span><i>{{_("Frais de livraison: 1000 CAF-Douala; 15000 CFA-Yaoundé")}}</i></span>
                 </div>
             </div>
             <div class="row">
@@ -101,7 +102,7 @@
             
             <div class="row">
                 <div class="form-group w-100 px-3">
-                    <input type="submit" value = "Buy"  class="btn btn-primary float-right">
+                    <input type="submit" value = "{{_("J'achète")}}"  class="btn btn-primary float-right">
                 </div>
             </div>
             
@@ -118,7 +119,8 @@
         if ($('#yes').is(':checked')) {
             if ($('#city').val()=="douala") {
                 total +=1000; 
-            } else {
+            } 
+            if ($('#city').val()=="yaounde"){
                 total += 1500;
             }
         }

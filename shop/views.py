@@ -16,14 +16,18 @@ def makeOrder(request, sku):
 	order.customer_firstName = params.get('customer_firstName')
 	order.customer_lastName = params.get('customer_lastName')
 	order.customer_phone = params.get('customer_phone')
-	order.delivery_address = params.get('delivery_address')
+
+	if params.get('delivery_address') != "":
+		order.delivery_address = params.get('delivery_address')
+	order.delivery_fee = 0
 	if params.get('city') == "douala" and order.delivery_address != None:
 		order.delivery_fee = 1000
 	if params.get('city') == "yaounde" and order.delivery_address != None:
 		order.delivery_fee = 1500
 	order.order_number = generate_order_number()
 	order.customer_email = params.get('customer_email')
-	order.total_price = (product.price - product.price*product.discount) * int(params.get('quantity')) + order.delivery_fee
+	final_price = int(product.price - product.price*product.discount/100)
+	order.total_price = final_price * int(params.get('quantity')) + order.delivery_fee
 	order.save()
 	OrderProduct.objects.create(order = order, product = product, quantity = int(params.get('quantity')))
 	#print(order.products.all()[0].name)

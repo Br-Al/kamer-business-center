@@ -28,7 +28,7 @@
                 <h4>Kamer Business Center</h4>
                 <h6>+237675648360</h6>
                 <h6>contact@kamerbusinesscenter.cm</h6>
-                <h6>Your Address</h6>
+                <h6>{{_("Votre Adresse")}}</h6>
             </div>
             <div class="col-md-4">
                 <img src="" alt="">
@@ -47,34 +47,34 @@
         <table class="table table-striped table-inverse">
             <thead class="thead-inverse">
                 <tr>
-                    <th>Product</th>
-                    <th>Unit Price</th>
-                    <th>Quantity</th>
-                    <th>Discount</th>
-                    <th>Delivery fee</th>
+                   <th>{{_("Nom du Produit")}}</th>
+                    <th> {{_("Prix Unitaire")}} </th>
+                    <th>{{_("Quantité")}}</th>
+                    <th>{{_("Discount")}}</th>
+                    <th>{{_("Frais de livraison")}}</th>
                 </tr>
             </thead>
             <tbody>
                 {% for product in order.products.all %}
                 <tr>
                     <td>{{product.name}}</td>
-                    <td>{{product.price}}</td>
-                    <td>{{order.orderproduct_set.first.quantity}}</td>
-                    <td>{{product.discount}}</td>
-                    <td>{{order.delivery_fee}}</td>
+                    <td>{{product.price}} {{_("CFA")}}</td>
+                    <td>{{order.orderproduct_set.first.quantity}} {{_("Pièce(s)")}}</td>
+                    <td>{{product.discount}} % </td>
+                    <td>{{order.delivery_fee}} {{_("CFA")}}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <h5 class="float-right text-primary">Total : {{order.total_price}} CFA</h5>
+        <h5 class="float-right text-primary">Total : {{order.total_price}} {{_("CFA")}}</h5>
     </div>
     <div class="container w-100">
         <div class="row container">
             <div class="col-md-6">
-                <h6>Kamer Business Center</h6>
+                <h6>{{_("Kamer Business Center")}}</h6>
             </div>
             <div class="col-md-6">
-                <h6 class="float-right">Customer</h6>
+                <h6 class="float-right">{{_("Client")}}</h6>
             </div>
         </div>
     </div>
