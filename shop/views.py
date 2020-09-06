@@ -30,6 +30,8 @@ def makeOrder(request, sku):
 	OrderProduct.objects.create(order = order, product = product, quantity = int(params.get('quantity')))
 	#print(order.products.all()[0].name)
 	messages.success(request, 'Your order has been registered !')
+	return redirect('shop:thanks')
 
-	return render(request, 'shop/product.html', {'product':product})
-
+def thanks(request):
+	reverse('shop:thanks')
+	return render(request,'shop/thanks.html')
