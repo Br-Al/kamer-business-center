@@ -1,108 +1,116 @@
-<div class="modal-dialog" role="document" id="myModal">
-    <div class="modal-content">
-    <div class="modal-header">
-        <h5 class="modal-title" id="create-user">Create Product</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">x</span>
-        </button>
-    </div>
-    <form method="POST" action="{% url 'sellerCenter:product.create' %}" enctype="multipart/form-data">
-        {% csrf_token %}  
-        <input type="hidden" name="next" value="{{ request.path }}">
-        <div class="card-body">
+{% extends "base_generic.html" %}
+{% block content %}
+    <div class="container-fluid">
+
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <a class="btn btn-primary" href="{% url 'sellerCenter:products' %}" >{{_("Product List")}} </a>
+        </ol>
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 id="create-user">Create Product</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{% url 'sellerCenter:product.create' %}" enctype="multipart/form-data">
+                    {% csrf_token %}  
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <div class="card-body">
+                                    
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                {{ form.name }}
+                                <label for="name"> Name</label>
+                            </div>
+                            {% if form.name.errors %}
+                                            
+                                <div class="alert alert-danger">
+                                        {% for error in form.name.errors %}
+                                        {{error}}
+                                        {% endfor %}
+                                </div>
+                                            
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        {{ form.price }}
+                                        <label for="price">Price</label>
+                                    </div>
+                                    {% if form.price.errors %}
+                                            
+                                        <div class="alert alert-danger">
+                                                {% for error in form.price.errors %}
+                                                {{error}}
+                                                {% endfor %}
+                                        </div>
+                                            
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                            {{ form.promo_price }}
+                                            <label for="promo_price">{{_("Promo Price")}} </label>
+                                    </div>
+                                    {% if form.promo_price.errors %}
+                                            
+                                        <div class="alert alert-danger">
+                                                {% for error in form.promo_price.errors %}
+                                                {{error}}
+                                                {% endfor %}
+                                        </div>
+                                            
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
                         
-            <div class="form-group">
-                <div class="form-label-group">
-                    {{ form.name }}
-                    <label for="name"> Name</label>
-                </div>
-                {% if form.name.errors %}
-                                  
-                    <div class="alert alert-danger">
-                            {% for error in form.name.errors %}
-                            {{error}}
-                            {% endfor %}
-                    </div>
-                                   
-                {% endif %}
-            </div>
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col-md-6">
-                        <div class="form-label-group">
-                            {{ form.price }}
-                            <label for="price">Price</label>
-                        </div>
-                        {% if form.price.errors %}
-                                  
-                            <div class="alert alert-danger">
-                                    {% for error in form.price.errors %}
-                                    {{error}}
-                                    {% endfor %}
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                    {{ form.image }}
+                                    <label for="image">Image</label>
                             </div>
-                                   
-                        {% endif %}
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-label-group">
-                                {{ form.discount }}
-                                <label for="discount">Discount</label>
+                            {% if form.image.errors %}
+                                            
+                                <div class="alert alert-danger">
+                                        {% for error in form.image.errors %}
+                                        {{error}}
+                                        {% endfor %}
+                                </div>
+                                            
+                            {% endif %}
+                            {% if form.image.url %}
+                                            
+                                <div class="alert alert-danger">
+                                    {{ form.image.url }}
+                                </div>
+                                            
+                            {% endif %}
                         </div>
-                        {% if form.discount.errors %}
-                                  
-                            <div class="alert alert-danger">
-                                    {% for error in form.discount.errors %}
-                                    {{error}}
-                                    {% endfor %}
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                    {{ form.description }}
+                                    <label for="description"></label>
                             </div>
-                                   
-                        {% endif %}
+                            {% if form.description.errors %}
+                                            
+                                <div class="alert alert-danger">
+                                        {% for error in form.description.errors %}
+                                        {{error}}
+                                        {% endfor %}
+                                </div>
+                                            
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save"  class="btn btn-primary float-right">
+                        </div>
                     </div>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <div class="form-label-group">
-                        {{ form.image }}
-                        <label for="image">Image</label>
-                </div>
-                {% if form.image.errors %}
-                                  
-                    <div class="alert alert-danger">
-                            {% for error in form.image.errors %}
-                            {{error}}
-                            {% endfor %}
-                    </div>
-                                   
-                {% endif %}
-                 {% if form.image.url %}
-                                  
-                    <div class="alert alert-danger">
-                           {{ form.image.url }}
-                    </div>
-                                   
-                {% endif %}
-            </div>
-            <div class="form-group">
-                <div class="form-label-group">
-                        {{ form.description }}
-                        <label for="description"></label>
-                </div>
-                {% if form.description.errors %}
-                                  
-                    <div class="alert alert-danger">
-                            {% for error in form.description.errors %}
-                            {{error}}
-                            {% endfor %}
-                    </div>
-                                   
-                {% endif %}
+                   
+                    
+                </form>
             </div>
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <input type="submit" value = "Save"  class="btn btn-primary">
-        </div>
-    </form>
     </div>
-</div>
+{% endblock %}

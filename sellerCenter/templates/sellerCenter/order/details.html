@@ -59,7 +59,6 @@
                                 <th>{{_("Nom du Produit")}}</th>
                                 <th> {{_("Prix Unitaire")}} </th>
                                 <th>{{_("Quantité")}}</th>
-                                <th>{{_("Discount")}}</th>
                                 <th>{{_("Frais de livraison")}}</th>
                             </tr>
                             </thead>
@@ -67,9 +66,8 @@
                                 {% for product in order.products.all %}
                                 <tr>
                                     <td>{{product.name}}</td>
-                                    <td>{{product.price}} {{_("CFA")}}</td>
+                                    <td>{{product.promo_price}} {{_("CFA")}}</td>
                                     <td>{{order.orderproduct_set.first.quantity}} {{_("Pièce(s)")}}</td>
-                                    <td>{{product.discount}} % </td>
                                     <td>{{order.delivery_fee}} {{_("CFA")}}</td>
                                 </tr>
                                 {% endfor %}

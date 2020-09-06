@@ -5,21 +5,21 @@
     <div class="row">
         <div class="col-md-6 my-2" style="background-color: #ff9d01;color: #ffffff;">
                 <div class="">
-                    <h3 class=" text-center mx-auto w-auto">{{product.name}}  -{{product.discount}}%</h3> 
+                    <h3 class=" text-center mx-auto w-auto">{{product.name}} <b id="discount" class="text-red"></b></h3> 
                 </div>
                 <div class="form-group"> 
                     <input type="hidden" name="discount" id="discount" value="{{product.discount}}">
                     <div class="form-row">
                         <div class="col-md-6 form-group">
                             <div class="form-label-group">
-                                <input type="number" id="price" class="form-control" value="{{product.price}}" readonly>
-                                <label for="price">{{_("Prix Unitaire (CFA)")}}</label>
+                                <input type="number" id="price" class="form-control" value="{{product.promo_price}}" readonly>
+                                <label for="price">{{_("Prix Unitaire")}} <s>{{product.price}}</s> {{_(" (CFA)")}} </label>
                             </div>
                         </div>
                         <div class="col-md-6 form-group">
                             <div class="form-label-group">
                                 <input type="number" name="quantity" id="quantity" class="form-control" value="1" min="1" required="required">
-                                <label for="lastName">{{_("Quantité")}}</label>
+                                <label for="quantity">{{_("Quantité")}}</label>
                             </div>
                         </div>
                     </div>
@@ -82,16 +82,24 @@
                 <div class="form-group" >
                     <label for="address">{{_("Adresse")}}</label>
                     <select name="city" id="city" class="form-control">
-                        <option value="0" selected>{{_("Choisissez une Ville")}}</option>
-                        <option value="douala">{{_("Douala")}}</option>
-                        <option value="yaounde">{{_("Yaounde")}}</option>
+                        <option value="None" selected>Selectionez Une ville</option>
+                        {% for city in cities %}
+                            <option value="{{city.city_id}}">{{city.name}}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <input type="text" id="address" name="delivery_address" class="form-control" placeholder="{{_("Adresse de livraison")}}" value = "">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group" id="delivery_fee">
+                                <h5  class="float-right"></h5>
+                            </div>
+                        </div>
+                    </div>
                     
-                    <input type="text" id="address" name="delivery_address" class="form-control" placeholder="{{_("Adresse de livraison")}}" value = "">
-                    
-                    <span><i>{{_("Frais de livraison: 1000 CAF-Douala; 15000 CFA-Yaoundé")}}</i></span>
                 </div>
             </div>
             <div class="row">
@@ -113,20 +121,42 @@
 </form>
 <script type="text/javascript">
     totalPrice();
-    
-    function totalPrice() {
-        total = ($('#price').val()- $('#price').val()* $('#discount').val()/100) * $('#quantity').val();
-        if ($('#yes').is(':checked')) {
-            if ($('#city').val()=="douala") {
-                total +=1000; 
-            } 
-            if ($('#city').val()=="yaounde"){
-                total += 1500;
-            }
-        }
+    getDeliveryFee()
+    getDiscount()
+
+    function getDiscount() {
+        price = '{{product.price}}';
+        promo_price = '{{product.promo_price}}'
+        discount = parseInt((price - promo_price)*100/price);
+        $('#discount').html( "( - " + discount +" % )");
+    }
+    function totalPrice(delivery_fee = 0) {
+        total = $('#price').val()* $('#quantity').val() + delivery_fee;
+       
         $('#total-price h3').html("Total: "+ total +"  CFA");
     }
 
+    function getDeliveryFee() {
+        var sku = "{{product.sku}}"
+        delivery_fee = 0;
+        $('#delivery_fee h5').html("Frais de Livraison: "+ delivery_fee +"  CFA"); 
+        if ($("#city").val() != "None"){
+            var sku = "{{product.sku}}"
+            $.ajax({
+                url: '/sellerCenter/delivery_fee/'+sku+'/'+$("#city").val(),
+                success: function(data){
+                    delivery_fee = data.delivery_fee  ;
+                    $('#delivery_fee h5').html("Frais de Livraison: "+ delivery_fee +"  CFA"); 
+                    totalPrice(delivery_fee);
+                }
+            })
+        }else{
+            totalPrice(delivery_fee);  
+        }
+        return delivery_fee
+         
+        
+    }
     
     $("input:radio").change(function () {
         totalPrice();
@@ -137,11 +167,13 @@
         }
         
     })
+
+    
     $("#quantity").change(function(){
         totalPrice();
     })
     $("#city").change(function(){
-        totalPrice();
+        getDeliveryFee();
     })
 </script>
 {% endblock %} 

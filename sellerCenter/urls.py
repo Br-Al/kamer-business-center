@@ -30,6 +30,11 @@ urlpatterns = [
 
     path('order/<str:id>/details', views.detailsOrder, name = 'order.details'),
     path('order/<str:id>/invoice', views.generateInvoice, name ='order.invoice'),
-    
 
+    path('delivery_fees', views.deliveryFees, name = 'delivery_fees'),
+    path('delivery_fee/create', views.createDeliveryFee, name = 'delivery_fee.create'),
+    path('delivery_fee/<str:sku>/<str:city_id>', views.getDeliveryFee, name = 'delivery_fee.product.city'),
+    
+    path('cities', views.cities, name = 'cities'),
+    path('city/create', views.createCity, name = 'city.create'),
 ]

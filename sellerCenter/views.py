@@ -1,14 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .forms import RegistrationForm, updateUserForm, createProductForm, updateProductForm
+from .forms import RegistrationForm, updateUserForm, createProductForm, updateProductForm, deliveryFeeForm, CreateCityForm
 from django.contrib import messages
 from django.urls import reverse
-from .models import Product, Order, ProductManagement
-from .sku_generator import generate_sku
+from .models import Product, Order, ProductManagement, DeliveryFee, City
+#from .sku_generator import generate_sku
 
 
 # Create your views here.
@@ -31,12 +31,12 @@ def users(request):
 @login_required()
 def products(request):
 	
-	products = Product.objects.all()
+	products = Product.objects.all().order_by('created_at')
 	return render(request, 'sellerCenter/products.html', {'products':products})
 
 @login_required()
 def orders(request):
-	orders = Order.objects.all()
+	orders = Order.objects.all().order_by('-created_at')
 	return render(request, 'sellerCenter/orders.html', {'orders': orders})
 
 """ 
@@ -129,10 +129,11 @@ def createProduct(request, user_id=None):
 	
 	if request.method == 'POST':
 		form_data = request.POST.copy()
-		form_data['sku'] = generate_sku(form_data['name'])
 		form = createProductForm(form_data, request.FILES)
 		if form.is_valid():
-			product = form.save()
+			product = form.save(commit=False)
+			product.set_id()
+			product.save()
 			ProductManagement.objects.create(user = request.user, product = product, action = "create")
 			messages.success(request, 'Product Saved :!')
 		return redirect('sellerCenter:products')
@@ -190,3 +191,54 @@ def generateInvoice(request, id):
 	reverse('sellerCenter:order.invoice', args = [id])
 	order = get_object_or_404(Order, pk = id)
 	return render(request, 'sellerCenter/order/invoice.html', {'order': order})
+
+
+@login_required()
+def deliveryFees(request):
+	reverse('sellerCenter:delivery_fees')
+	delivery_fees = DeliveryFee.objects.all()
+	form = deliveryFeeForm()
+	return render(request, 'sellerCenter/delivery_fee.html', {'delivery_fees' : delivery_fees, 'form': form})
+
+@login_required()
+def createDeliveryFee(request):
+	if request.method == "POST":
+		form = deliveryFeeForm(request.POST)
+		if form.is_valid():
+			form.save()
+			messages.success(request, 'Delivery Fee added !')
+			return redirect('sellerCenter:delivery_fees')
+
+@login_required()
+def getDeliveryFee(request, sku, city_id):
+	reverse('sellerCenter:delivery_fee.product.city', args = [sku, city_id])
+	delivery_fee = DeliveryFee.objects.filter(sku=sku, city_id = city_id).first()
+	return JsonResponse({'delivery_fee':delivery_fee.amount})
+
+@login_required()
+def updateDeliveryFee(request):
+	reverse('sellerCenter:delivery_fee')
+	delivery_fees = DeliveryFee.objects.all()
+	return(request, 'sellerCenter/delivery_fee')
+
+@login_required()
+def cities(request):
+	reverse('sellerCenter:cities')
+	cities = City.objects.all().order_by('created_at')
+	form = CreateCityForm()
+	return render(request, 'sellerCenter/cities.html', {'cities':cities, 'form':form})
+
+@login_required()
+def createCity(request):
+	reverse('sellerCenter:city.create')
+	if request.method == 'POST':
+		form = CreateCityForm(request.POST)
+		if form.is_valid():
+			city = form.save(commit = False)
+			city.set_id()
+			city.save()
+			messages.success(request, 'City created !')
+			return redirect('sellerCenter:cities')
+		else:
+			messages.error(request, 'Error in some field !')
+			return redirect('sellerCenter:cities')

@@ -1,62 +1,63 @@
 {% extends "base_generic.html" %}
 {% block content %}
       <div class="container-fluid">
-
+        
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
-          <a class="btn btn-primary" href="{% url 'sellerCenter:product.create' %}" >New Product</a>
+          <form action="{% url 'sellerCenter:city.create'%}" method="post" class="w-100">
+            {% csrf_token %} 
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-md-4">
+                  <label for="">{{_("Name")}}</label>
+                  {{form.name}}
+                </div>
+                <div class="col-md-4">
+                  <label for="">{{_("Code")}}</label>
+                  {{form.code}}
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="">{{_("Create New City")}}</label>
+                    <input type="submit" class="form-control" value="Save" >
+                  </div>
+                  
+                </div>
+              </div>
+              
+            </div>
+          </form>
         </ol>
 
         <!-- DataTables Example -->
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
-            All Products
+            {{_("Cities")}}
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table table-bordered table-striped table-inverse " id="dataTable" width="100%" cellspacing="0">
-                <thead class="thead-inverse">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Price (CFA)</th>
-                    <th>Promo Price (CFA)</th>
-                    <th>Image</th>
-                    <th>Action</th>
+                    <th>{{_("Name")}} </th>
+                    <th>{{_("Code")}} </th>
+                    <th>{{_("Created at")}} </th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
-                    <th>Name</th>
-                    <th>Price (CFA)</th>
-                    <th>Promo Price (CFA)</th>
-                    <th>Image</th>
-                    <th>Action</th>
+                    <th>{{_("Name")}} </th>
+                    <th>{{_("Code")}} </th>
+                    <th>{{_("Created at")}} </th>
                   </tr>
                 </tfoot>
                 <tbody>
-                {% for product in products %}
+                {% for city in cities %}
                   <tr>
-                    <td>{{product.name}}</td>
-                    <td>{{product.price}}</td>
-                    <td>{{product.promo_price}}</td>
-                    <td> <img class="mx-auto img img-responsive" src = {{product.image.url}} height="40px"></td>
-                    <td class="">
-                        <div class="row">
-                            <a href="#" data-toggle="modal" class="shop-link-modal col-md-6" data-id="{{product.get_absolute_url}}" >
-                                <span class="fas fa-link mx-auto text-primary" aria-hidden="true"></span>
-                            </a>
-                            <a href="#" data-toggle="modal" class="open-modal col-md-6"  data-url="{% url 'sellerCenter:product.form.update' product.sku %}">
-                                <span class="fas fa-edit mx-auto text-secondary" aria-hidden="true"></span>
-                            </a>
-                            <!--
-                            <a href="#" data-toggle="modal" class="open-modal col-md-4"  data-url="{% url 'sellerCenter:product.form.delete' product.sku %}">
-                                <span class="fas fa-trash-alt mx-auto text-danger" aria-hidden="true"></span>
-                            </a>
-                            -->
-                        </div>
-                        
-                    </td>
+                    <td>{{city.name}}</td>
+                    <td>{{city.code}}</td>
+                    <td>{{city.created_at}}</td>
                   </tr>
                 {% endfor %}
                 </tbody>
