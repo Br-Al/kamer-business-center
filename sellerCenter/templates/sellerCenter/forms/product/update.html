@@ -45,13 +45,13 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-label-group">
-                                {{ form.discount }}
-                                <label for="discount">Discount (%)</label>
+                                {{ form.promo_price }}
+                                <label for="promo_price">Promo Price (CFA)</label>
                         </div>
-                        {% if form.discount.errors %}
+                        {% if form.promo_price.errors %}
                                   
                             <div class="alert alert-danger">
-                                    {% for error in form.discount.errors %}
+                                    {% for error in form.promo_price.errors %}
                                     {{error}}
                                     {% endfor %}
                             </div>
