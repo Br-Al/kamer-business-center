@@ -8,6 +8,7 @@ from .forms import RegistrationForm, updateUserForm, createProductForm, updatePr
 from django.contrib import messages
 from django.urls import reverse
 from .models import Product, Order, ProductManagement, DeliveryFee, City
+from .admin import OrderResource, ProductResource
 #from .sku_generator import generate_sku
 
 
@@ -36,7 +37,7 @@ def products(request):
 
 @login_required()
 def orders(request):
-	orders = Order.objects.all().order_by('-created_at')
+	orders = Order.objects.all().order_by('created_at')
 	return render(request, 'sellerCenter/orders.html', {'orders': orders})
 
 """ 
@@ -135,7 +136,7 @@ def createProduct(request, user_id=None):
 			product.set_id()
 			product.save()
 			ProductManagement.objects.create(user = request.user, product = product, action = "create")
-			messages.success(request, 'Product Saved :!')
+			messages.success(request, 'Product Saved !')
 		return redirect('sellerCenter:products')
 	else:
 		form = createProductForm()
@@ -156,8 +157,8 @@ def updateProduct(request, sku):
 def deleteProduct(request, sku):
 	reverse('sellerCenter:product.delete', args=[sku])
 	product = get_object_or_404(Product, pk = sku)
+	ProductManagement.objects.create(user = request.user, product = product, action = "delete")
 	product.delete()
-	#ProductManagement.objects.create(user = request.user, product = product, action = "delete")
 	messages.success(request, 'Product deleted !')
 	return redirect('sellerCenter:products')
 
@@ -242,3 +243,9 @@ def createCity(request):
 		else:
 			messages.error(request, 'Error in some field !')
 			return redirect('sellerCenter:cities')
+
+def export_orders(request, format = 'xls'):
+    dataset = OrderResource().export()
+    response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="orders.xls"'
+    return response

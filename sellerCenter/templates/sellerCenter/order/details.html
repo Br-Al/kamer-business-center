@@ -79,15 +79,15 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="print" ><i class="fas fa-print    "></i></button>
+            <button type="button" class="btn btn-primary" id="print-details" ><i class="fas fa-print    "></i></button>
          
         </div>
     </div>
 </div>
 
 <script>
-    $('#print').click(function () {
-
+    $("#print-details").click(function () {
+        alert('print');
         screen.width/2;
         window.open("{% url 'sellerCenter:order.invoice' order.order_number %}", "", "top=0, left= 0");
     })

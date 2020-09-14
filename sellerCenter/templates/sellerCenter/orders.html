@@ -4,14 +4,20 @@
         <!-- DataTables Example -->
         <div class="card mb-3">
           <div class="card-header">
-            <i class="fas fa-table"></i>
-            All Orders</div>
+          <span class="">
+            <i class="fas fa-table"></i>All Orders
+          </span>
+            
+          <span class="mx-3"><a href="{% url 'sellerCenter:orders.export' %}"><i class="fas fa-download"></i>Download</a></span>
+          <span class="mx-3"><a href="#" id="print"><i class="fas fa-print"></i>Print</a></span>
+          </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
+                <thead class="thead-inverse">
                   <tr>
                    
+                    <th> <input type="checkbox" class="form-control" name="all" id="0"> </th>
                     <th>Created At</th>
                     <th>Customer</th>
                     <th>Phone</th>
@@ -20,20 +26,10 @@
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tfoot>
-                  <tr>
-                    
-                    <th>Cerated At</th>
-                    <th>Customer</th>
-                    <th>Phone</th>
-                    <th>Product</th>
-                    <th>Total (CFA)</th>
-                    <th>Action</th>
-                  </tr>
-                </tfoot>
                 <tbody>
                 {% for order in orders %}
                   <tr>
+                    <td> <input type="checkbox" class="form-control selected" name="selected" id="{{order.order_number}}" value="{{order.order_number}}"> </td>
                     <td>{{order.created_at}}</td>
                     <td>{{order.customer_firstName}} {{order.customer_lastName}}</td>
                     <td>{{order.customer_phone}}</td>
@@ -101,5 +97,18 @@
                   }
                 });     
             });
+            $("#print").on("click", function () {
+              urls = []
+              $("input:checkbox[name=selected]:checked").each(function(){
+               
+                var url_link =  "order/"+$(this).val()+"/invoice";
+                urls.push(url_link)
+                
+              });
+              urls.forEach(url => {
+                screen.width/2;
+                window.open(url, "", "top=0, left= 0");
+              });
+            })
       </script>
 {% endblock %} 

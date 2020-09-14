@@ -14,6 +14,7 @@ urlpatterns = [
     path('users', views.users, name = "users"),
     path('products', views.products, name = "products"),
     path('orders', views.orders, name = "orders"),
+    path('orders/export', views.export_orders, name = "orders.export"),
     path('login', auth_views.LoginView.as_view(), name = "login"),
     path('user', views.createUser, name = "user.create"),
     path('user/update/<int:user_id>', views.updateUser, name = "user.update"),

@@ -21,7 +21,11 @@ def makeOrder(request, sku):
 	
 	if params.get('city') != "None":
 		city = get_object_or_404(City, pk = params.get('city'))
-		order.delivery_fee = DeliveryFee.objects.filter(sku=sku, city_id = city.city_id).first().amount
+		fee = DeliveryFee.objects.filter(sku=sku, city_id = city.city_id).first()
+		if fee:
+			order.delivery_fee = fee.amount
+		else:
+			order.delivery_fee = 1500
 		order.delivery_address = params.get('delivery_address')
 	
 	order.customer_email = params.get('customer_email')

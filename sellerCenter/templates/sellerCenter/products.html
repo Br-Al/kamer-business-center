@@ -15,7 +15,7 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table table-bordered table-striped table-inverse " id="dataTable" width="100%" cellspacing="0">
+              <table class="table table-bordered table-striped " id="dataTable" width="100%" cellspacing="0">
                 <thead class="thead-inverse">
                   <tr>
                     <th>Name</th>
@@ -43,17 +43,15 @@
                     <td> <img class="mx-auto img img-responsive" src = {{product.image.url}} height="40px"></td>
                     <td class="">
                         <div class="row">
-                            <a href="#" data-toggle="modal" class="shop-link-modal col-md-6" data-id="{{product.get_absolute_url}}" >
+                            <a href="#" data-toggle="modal" class="shop-link-modal col-md-4" data-id="{{product.get_absolute_url}}" >
                                 <span class="fas fa-link mx-auto text-primary" aria-hidden="true"></span>
                             </a>
-                            <a href="#" data-toggle="modal" class="open-modal col-md-6"  data-url="{% url 'sellerCenter:product.form.update' product.sku %}">
+                            <a href="#" data-toggle="modal" class="open-modal col-md-4"  data-url="{% url 'sellerCenter:product.form.update' product.sku %}">
                                 <span class="fas fa-edit mx-auto text-secondary" aria-hidden="true"></span>
                             </a>
-                            <!--
                             <a href="#" data-toggle="modal" class="open-modal col-md-4"  data-url="{% url 'sellerCenter:product.form.delete' product.sku %}">
                                 <span class="fas fa-trash-alt mx-auto text-danger" aria-hidden="true"></span>
                             </a>
-                            -->
                         </div>
                         
                     </td>
