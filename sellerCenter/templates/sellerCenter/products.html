@@ -43,7 +43,7 @@
                     <td> <img class="mx-auto img img-responsive" src = {{product.image.url}} height="40px"></td>
                     <td class="">
                         <div class="row">
-                            <a href="#" data-toggle="modal" class="shop-link-modal col-md-4" data-id="{{product.get_absolute_url}}" >
+                            <a href="#" data-toggle="modal" class="shop-link-modal col-md-4" data-url="{% url 'sellerCenter:seller.product.referal' product.sku %}" >
                                 <span class="fas fa-link mx-auto text-primary" aria-hidden="true"></span>
                             </a>
                             <a href="#" data-toggle="modal" class="open-modal col-md-4"  data-url="{% url 'sellerCenter:product.form.update' product.sku %}">
@@ -82,9 +82,7 @@
       </div>
       <!-- /.container-fluid -->
       <script type="text/javascript">
-            function getForm(){
-                
-			}
+         
             var modalDiv = $("#modal-div");
            
             $(".open-modal").on("click", function(){
@@ -97,9 +95,14 @@
 				});     
 			});
             $(".shop-link-modal").on("click", function(){
-                
-                $('input[name = link]').val($(this).data('id'));
-                $("#shop-link").modal();
+                $.ajax({
+                  url: $(this).attr("data-url"),
+                  success: function(data){
+                      $('input[name = link]').val(data.referal_link);
+                      $("#shop-link").modal();
+                  }
+                }); 
+               
 			}); 
 
             $("#copy").on("click", function(){

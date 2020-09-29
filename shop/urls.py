@@ -8,8 +8,8 @@ urlpatterns = [
    # path('', RedirectView.as_view(url='dashboard')),
     
     path('', RedirectView.as_view(url='dashboard')),
-    path('product/<str:sku>', views.shop, name = "product.view.shop"),
-    path('product/<str:sku>/order', views.makeOrder, name = "make.order"),
+    path('product/<str:referal_id>', views.shop, name = "product.view.shop"),
+    path('product/<str:referal_id>/order', views.makeOrder, name = "make.order"),
     path('thanks', views.thanks, name = "thanks"),
 
 ]

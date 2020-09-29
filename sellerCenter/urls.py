@@ -28,6 +28,7 @@ urlpatterns = [
     path('product/form-update/<str:sku>', views.form_updateProduct, name = "product.form.update"),
     path('product/delete/<str:sku>', views.deleteProduct, name = "product.delete"),
     path('product/form-delete/<str:sku>', views.form_deleteProduct, name = "product.form.delete"),
+    path('seller/<str:sku>/referal', views.get_referal_link, name = "seller.product.referal"),
 
     path('order/<str:id>/details', views.detailsOrder, name = 'order.details'),
     path('order/<str:id>/invoice', views.generateInvoice, name ='order.invoice'),

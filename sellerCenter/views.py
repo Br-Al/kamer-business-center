@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from .forms import RegistrationForm, updateUserForm, createProductForm, updateProductForm, deliveryFeeForm, CreateCityForm
 from django.contrib import messages
 from django.urls import reverse
-from .models import Product, Order, ProductManagement, DeliveryFee, City
+from .models import Product, Order, ProductManagement, DeliveryFee, City, Referal
 from .admin import OrderResource, ProductResource
 #from .sku_generator import generate_sku
 
@@ -249,3 +249,19 @@ def export_orders(request, format = 'xls'):
     response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
     response['Content-Disposition'] = 'attachment; filename="orders.xls"'
     return response
+
+@login_required()
+def get_referal_link(request, sku):
+	reverse('sellerCenter:seller.product.referal', args = [sku])
+	# return the referal link for the product and the connected seller
+	# and create a referal link if not yet set.
+	referal = Referal.objects.filter(seller=request.user, product=sku).first()
+	if referal == None:
+		
+		product = get_object_or_404(Product, pk = sku)
+		referal = Referal.objects.create(seller = request.user, product = product)
+		referal.set_id()
+		referal.set_link()
+		referal.save()
+
+	return JsonResponse({'referal_link': referal.link})

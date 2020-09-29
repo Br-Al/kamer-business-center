@@ -79,6 +79,7 @@ class Product(SoftDeletionModel):
         related_name = 'product'
         
     )
+
     created_at = models.DateField(auto_now_add = True)
     updated_at = models.DateField(auto_now = True)
     def get_absolute_url(self):
@@ -93,9 +94,6 @@ class Product(SoftDeletionModel):
         image_name = 'barcode-'+self.sku
         self.barcode.save(image_name, content=ContentFile(image_io.getvalue()), save=False)
         
-
-
-
     def __str__(self):
         return self.name
 
@@ -105,6 +103,21 @@ class Product(SoftDeletionModel):
         related_name='delivery_fee'
 
     )
+class Referal(models.Model):
+    referal_id = models.CharField(db_column='REFERAL_ID', primary_key=True, max_length=255)  # Field name made lowercase.
+    product = models.ForeignKey(Product, models.DO_NOTHING, db_column='SKU')  # Field name made lowercase.
+    seller = models.ForeignKey(User, models.DO_NOTHING, db_column='USER_ID')  # Field name made lowercase.
+    link = models.CharField(db_column='LINK', max_length=255, null = True)  # Field name made lowercase.
+    is_active = models.BooleanField(db_column='IS_ACTIVE', default = True)  # Field name made lowercase.
+    
+    class Meta:
+        db_table = 'referal'
+
+    def set_link(self):
+        self.link = 'http://kamerbusinesscenter.com'+ reverse('shop:product.view.shop', args = [self.referal_id])
+    
+    def set_id(self):
+        self.referal_id = generate_id('sellerCenter','Referal','referal_id', 'Referal')
 
 class Order(SoftDeletionModel):
     customer_firstName = models.CharField(max_length=200)
@@ -118,6 +131,7 @@ class Order(SoftDeletionModel):
     status = models.CharField(max_length=200, default="Complet")
     payment_status = models.CharField(max_length=200, default="En attente")
     barcode = models.ImageField(upload_to = 'sellerCenter/barecode/%y/%m/%d', null = True, blank = True)
+    referal = models.ForeignKey(Referal, models.DO_NOTHING, db_column='REFERAL_ID', null = True)  # Field name made lowercase.
     products = models.ManyToManyField(
         Product,
         through = 'OrderProduct',
@@ -140,11 +154,9 @@ class Order(SoftDeletionModel):
         image_name = 'barcode-'+self.order_number
         self.barcode.save(image_name, content=ContentFile(image_io.getvalue()), save=False)
 
-
-
 class DeliveryFee(SoftDeletionModel):
     city = models.ForeignKey(City, models.DO_NOTHING, db_column='CITY_ID')  # Field name made lowercase.
-    sku = models.ForeignKey('Product', models.DO_NOTHING, db_column='SKU')  # Field name made lowercase.
+    sku = models.ForeignKey(Product, models.DO_NOTHING, db_column='SKU')  # Field name made lowercase.
     amount = models.PositiveIntegerField(db_column='AMOUNT', default = 1500)  # Field name made lowercase.
     created_at = models.DateField(db_column='CREATED_AT', auto_now_add=True)  # Field name made lowercase.
    
@@ -154,6 +166,7 @@ class OrderProduct(SoftDeletionModel):
     order = models.ForeignKey(Order, on_delete = models.CASCADE)
     created_at = models.DateField(auto_now_add = True)
     updated_at = models.DateField(auto_now = True)
+
 class ProductManagement(SoftDeletionModel):
     action =  models.CharField(max_length=200)
     created_at = models.DateField(auto_now_add = True)
@@ -168,3 +181,5 @@ class OrderManagement(SoftDeletionModel):
     updated_at = models.DateField(auto_now = True)
     order = models.ForeignKey(Order, on_delete = models.CASCADE)
     user = models.ForeignKey(User, on_delete = models.CASCADE)
+
+
